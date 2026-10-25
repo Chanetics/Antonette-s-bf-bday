@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday – Clan Party</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- envelope: she writes the message -->
+<section class="screen on" id="se">
+  <h2 class="stroke" id="etitle">A letter is waiting…</h2>
+  <p id="esub">Tap the envelope to open it and write your message.</p>
+  <button id="env" type="button" aria-label="Open the envelope">
+    <span class="eback"></span><span class="epaper"></span><span class="efront"></span><span class="eflap"></span><span class="eseal">❤</span>
+  </button>
+  <div id="wform" hidden>
+    <label for="wtext">To my love 💙</label>
+    <textarea id="wtext" maxlength="30000" placeholder="Write your letter here… (up to 1000 words)"></textarea>
+    <div id="wcount" aria-live="polite">0 / 1000 words</div>
+    <button class="btn" id="wsend" type="button" disabled>Send ✈️</button>
+  </div>
+</section>
+
+<!-- paper airplane flight -->
+<section class="screen" id="sf">
+  <div class="clouds" aria-hidden="true"><span>☁️</span><span>☁️</span><span>☁️</span></div>
+  <h2 class="stroke" id="ftitle">Your letter is flying…</h2>
+  <div id="route">
+    <div class="node"><b>🧙</b>Intro</div>
+    <div class="node"><b>🧩</b>Puzzle</div>
+    <div class="node"><b>⚔️</b>Battle</div>
+    <div class="node"><b>🎂</b>Last slide</div>
+    <svg id="plane" viewBox="0 0 64 64" aria-hidden="true"><path d="M4 30 L60 6 L40 58 L30 38 Z" fill="#fff" stroke="#0d2352" stroke-width="3" stroke-linejoin="round"/><path d="M30 38 L60 6" stroke="#0d2352" stroke-width="3"/><path d="M30 38 L28 52 L38 44 Z" fill="#cfe0ff" stroke="#0d2352" stroke-width="3" stroke-linejoin="round"/></svg>
+  </div>
+  <div id="landed" hidden>
+    <p>Your letter landed on the last slide! 💌</p>
+    <div id="lbtns">
+      <button class="btn" id="fletter" type="button">💌 Open a letter</button>
+      <button class="btn blue" id="fstart" type="button">Start the quest</button>
+    </div>
+  </div>
+</section>
+
+<!-- 0: intro -->
+<section class="screen" id="s0">
+  <div class="bgdeco" aria-hidden="true"><span>🏰</span><span>🌳</span><span>🏠</span></div>
+  <svg id="npc" viewBox="0 0 200 300" role="img" aria-label="Advisor">
+    <path d="M14 300 L28 214 Q100 182 172 214 L186 300 Z" fill="#2b2f45"/>
+    <path d="M84 200 L116 200 L100 262 Z" fill="#fff"/><path d="M95 206 h10 l4 44 -9 12 -9 -12 z" fill="#111"/>
+    <path d="M70 204 L100 262 L60 300 L28 300 Z M130 204 L100 262 L140 300 L172 300 Z" fill="#1d2033"/>
+    <rect x="86" y="164" width="28" height="44" rx="8" fill="#e8bd96"/>
+    <ellipse cx="48" cy="124" rx="9" ry="14" fill="#f2c9a3"/><ellipse cx="152" cy="124" rx="9" ry="14" fill="#f2c9a3"/>
+    <ellipse cx="100" cy="120" rx="52" ry="58" fill="#f6d2b0"/>
+    <path d="M46 112 Q36 36 100 28 Q168 34 154 112 Q142 74 100 76 Q58 74 46 112 Z" fill="#4a5068"/>
+    <path d="M70 52 L88 8 L104 46 L126 12 L132 56 Z" fill="#4a5068"/>
+    <rect x="58" y="108" width="40" height="28" rx="12" fill="#14141c"/><rect x="102" y="108" width="40" height="28" rx="12" fill="#14141c"/>
+    <rect x="96" y="116" width="8" height="4" fill="#14141c"/>
+    <ellipse cx="72" cy="117" rx="7" ry="3" fill="#fff" opacity=".5"/><ellipse cx="116" cy="117" rx="7" ry="3" fill="#fff" opacity=".5"/>
+    <path d="M86 158 Q100 168 114 158" stroke="#a5624a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </svg>
+  <div id="choices" hidden>
+    <button class="ch green" id="cgo" type="button">Begin the quest</button>
+    <button class="ch locked" id="clet" type="button" aria-disabled="true">🔒 Read the letter</button>
+    <button class="ch" id="chow" type="button">How to play</button>
+  </div>
+  <div id="dbox" role="button" tabindex="0" aria-label="Tap to continue">
+    <div id="dname">Advisor</div>
+    <p id="dtext"></p>
+    <span id="dnext" hidden>▼</span>
+  </div>
+</section>
+
+<!-- 1: puzzle -->
+<section class="screen" id="s1">
+  <h2 class="stroke">Rebuild the Town Hall!</h2>
+  <p id="pmsg">Slide the pieces to finish the picture. The empty space ends at the bottom-right.</p>
+  <div id="pz">
+    <div id="board"></div>
+    <div id="side">
+      <img id="prev" alt="Puzzle preview">
+      <div class="pill">Moves: <span id="mv">0</span></div>
+      <button class="btn blue sm" id="shuf">Shuffle</button>
+      <button class="btn sm" id="hint">Hint</button>
+      <button class="btn blue sm" id="auto">Solve for me</button>
+    </div>
+  </div>
+</section>
+
+<!-- 2: greeting -->
+<section class="screen" id="s2">
+  <div class="crown">👑</div>
+  <h1 class="stroke" id="hb" aria-label="Happy Birthday"></h1>
+  <h2 class="stroke">Have an epic birthday, Love!</h2>
+  <p>Chief, your clan has a surprise waiting.</p>
+  <button class="btn" id="next">Next</button>
+</section>
+
+<!-- 3: game -->
+<section class="screen" id="s3">
+  <div id="bar">
+    <div class="pill" id="time">Level 1</div>
+    <div class="pill" id="gold">🪙 0</div>
+    <div id="elx"><div id="elxf"></div><div id="elxt"></div></div>
+    <div class="pill" id="pct">❤ 100%</div>
+  </div>
+  <div id="steps"><span>🧱 Foundation</span><span>🪵 Frame</span><span>🏠 Roof</span></div>
+  <div id="wrap">
+    <div id="cv"></div>
+    <div id="over">
+      <h2 class="stroke" id="ot">Victory!</h2>
+      <div id="stars"></div>
+      <p id="orw"></p>
+      <button class="btn" id="toGal">Next level</button>
+    </div>
+  </div>
+  <div id="shop">
+    <button class="card" data-k="cn"><b>💣</b>Cannon<i>🪙 300</i></button>
+    <button class="card" data-k="at"><b>🏹</b>Archer Tower<i>🪙 450</i></button>
+    <button class="card" data-k="mt"><b>🎯</b>Mortar<i>🪙 650</i></button>
+    <button class="card" data-k="gm"><b>⛏️</b>Gold Mine<i>🪙 250</i></button>
+    <button class="card" data-k="ec"><b>💧</b>Elixir Pump<i>🪙 250</i></button>
+    <button class="card" data-k="wl"><b>🧱</b>Wall<i>🪙 50</i></button>
+    <button class="card" data-k="up"><b>⬆️</b>Upgrade<i>up to Lv 3</i></button>
+    <button class="card" data-k="sell"><b>🔨</b>Sell<i>80% back</i></button>
+    <button class="btn sm" id="go">Start battle!</button>
+  </div>
+  <div id="troops" style="display:none">
+    <button class="card sel" data-t="b"><b>🪓</b>Barbarian<i>💧 2</i></button>
+    <button class="card" data-t="a"><b>🏹</b>Archer<i>💧 2</i></button>
+    <button class="card" data-t="gi"><b>💪</b>Giant<i>💧 5</i></button>
+  </div>
+  <div id="gmsg"></div>
+</section>
+
+<!-- 4: final -->
+<section class="screen" id="s4">
+  <h2 class="stroke">Happy Birthday, Love!</h2>
+  <div id="fin">
+    <button class="frame" id="feat" type="button"><span class="em">📷</span><small>Tap to take a photo of the two of you</small></button>
+    <div id="msgcol">
+      <img id="home" alt="Our finished home" hidden>
+      <div id="msg"></div>
+    </div>
+  </div>
+  <p>More memories: tap a frame to add a photo.</p>
+  <div id="grid"></div>
+  <button class="btn blue" id="letterBtn2" type="button">💌 Open the letter</button>
+  <input type="file" accept="image/*" id="file" hidden>
+  <input type="file" accept="image/*" capture="user" id="cap" hidden>
+</section>
+
+<!-- 5: THE END - happy birthday + confetti -->
+<section class="screen" id="s5">
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <div class="crown">👑</div>
+  <h1 class="stroke" id="hb2" aria-label="Happy Birthday"></h1>
+  <h2 class="stroke">I love you, Chief! 💙</h2>
+</section>
+
+<!-- camera -->
+<div id="cmod" role="dialog" aria-modal="true" aria-label="Take a photo">
+  <div class="cbox">
+    <div id="cwrap"><video id="cvideo" autoplay playsinline muted></video><div id="ccd" hidden></div></div>
+    <p>Get close together and smile! 📸</p>
+    <div class="ctools">
+      <button class="btn" id="csnap" type="button">📸 Take photo</button>
+      <button class="btn blue sm" id="cflip" type="button">🔄 Flip</button>
+      <button class="btn sm" id="ccancel" type="button">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- joke paywall for "Solve for me" -->
+<div id="pw" role="alertdialog" aria-modal="true" aria-labelledby="pwtitle">
+  <div class="rbox">
+    <div id="pwtitle">Premium Feature 👑</div>
+    <p id="pwtext">Auto-Solve is part of <b>Clan Pass Gold</b>. Subscribe now for only <b>$1000</b> / month!</p>
+    <div class="pwbtns">
+      <button class="ch green" id="pwsub" type="button">Subscribe $1000</button>
+      <button class="ch" id="pwcancel" type="button">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- reminder before the battle -->
+<div id="dm" role="alertdialog" aria-modal="true" aria-labelledby="dmtitle">
+  <div class="rbox">
+    <div id="dmtitle">Quest reminder ⚔️</div>
+    <p id="dmtext">Are you ready to defend your base? Please defend it properly. Defending your base is a must to reach the letter!</p>
+    <ol id="dsteps"><li class="done">Solve the puzzle</li><li>Defend your base (win all 3 levels)</li><li>Read the letter</li></ol>
+    <button class="ch green" id="dmok" type="button">I'm ready!</button>
+  </div>
+</div>
+
+<!-- quest reminder -->
+<div id="rm" role="alertdialog" aria-modal="true" aria-labelledby="rtitle">
+  <div class="rbox">
+    <div id="rtitle">Quest reminder</div>
+    <p id="rtext"></p>
+    <ol id="rsteps"><li id="rs1">Solve the puzzle</li><li id="rs2">Finish the Clash of Clans battle</li><li id="rs3">Read the letter</li></ol>
+    <button class="ch green" id="rok" type="button">Got it</button>
+  </div>
+</div>
+
+<!-- letter on her phone -->
+<div id="lm" role="dialog" aria-modal="true" aria-label="Letter">
+  <div class="lbox">
+    <div class="phone"><div class="notch"></div><div id="lscreen"></div></div>
+    <div class="ltools">
+      <label class="btn blue sm">📷 Take photo<input type="file" accept="image/*" capture="environment" id="lcam" hidden></label>
+      <label class="btn blue sm">📎 Upload photo / PDF<input type="file" accept="image/*,application/pdf,text/plain" id="lup" hidden></label>
+    </div>
+    <div id="lwrite" hidden>
+      <textarea id="ltext" placeholder="Type the letter here, then make a link"></textarea>
+      <button class="btn sm" id="lmake" type="button">Make link with letter</button>
+      <input id="llink" readonly placeholder="Send this link to her">
+    </div>
+    <button class="btn" id="lclose" type="button">🎉 HAPPY BIRTHDAY 🎉</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
